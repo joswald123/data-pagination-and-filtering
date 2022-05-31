@@ -73,3 +73,52 @@ function addPagination(list) {
 
 showPage(data, 1);
 addPagination(data);
+
+
+
+const header = document.querySelector('header');
+
+const searchComponent = `
+   <label for="search" class="student-search">
+   <span>Search by name</span>
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+
+`
+
+header.insertAdjacentHTML("beforeend", searchComponent);
+
+function searchFunction(searchInput, list) {
+   
+   let newStudentList = [];
+   const h3 = document.createElement('h3');
+   
+   for(let i=0; i < list.length; i++) {
+      if(list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase())){
+         newStudentList.push(list[i]);
+      }         
+   }
+
+   if(newStudentList.length === 0) {
+      h3.textContent = "No results found";
+      h3.className = "no-results";
+      header.insertAdjacentElement("afterend", h3);
+      console.log(h3);
+
+   } else {
+      h3.remove();
+   }
+
+   showPage(newStudentList, 1)
+   addPagination(newStudentList);
+
+}
+
+search.addEventListener('keyup', () => {
+
+   if(search.value.length != 0) {
+      searchFunction(search, data);
+   }
+
+ });
