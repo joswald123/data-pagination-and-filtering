@@ -6,7 +6,36 @@ FSJS Project 2 - Data Pagination and Filtering
 // Number of students per pageP
 const perPage = 9;
 
-/*P
+// Search Component
+const header = document.querySelector('header');
+const searchComponent = `
+   <label for="search" class="student-search">
+   <span>Search by name</span>
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+
+`
+header.insertAdjacentHTML("beforeend", searchComponent);
+
+// Not found Results
+const h3 = document.createElement('h3');
+h3.textContent = "No results found";
+h3.className = "no-results";
+h3.style.display = 'none';
+header.insertAdjacentElement("afterend", h3);
+
+function displayElement (list) {
+
+   if(list.length === 0) {
+      h3.style.display = '';
+
+   } else {
+      h3.style.display = 'none';
+   }
+}
+
+/*
  * Initialize showPage() function that will display a page of nine students.
    creates and insert/append the elements needed to display the page.
 * @param (list) array of student data, 
@@ -75,24 +104,9 @@ showPage(data, 1);
 addPagination(data);
 
 
-
-const header = document.querySelector('header');
-
-const searchComponent = `
-   <label for="search" class="student-search">
-   <span>Search by name</span>
-   <input id="search" placeholder="Search by name...">
-   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
-   </label>
-
-`
-
-header.insertAdjacentHTML("beforeend", searchComponent);
-
 function searchFunction(searchInput, list) {
    
    let newStudentList = [];
-   const h3 = document.createElement('h3');
    
    for(let i=0; i < list.length; i++) {
       if(list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase())){
@@ -100,25 +114,20 @@ function searchFunction(searchInput, list) {
       }         
    }
 
-   if(newStudentList.length === 0) {
-      h3.textContent = "No results found";
-      h3.className = "no-results";
-      header.insertAdjacentElement("afterend", h3);
-      console.log(h3);
+   displayElement(newStudentList);
+   
 
-   } else {
-      h3.remove();
-   }
 
    showPage(newStudentList, 1)
    addPagination(newStudentList);
 
 }
 
+// event Listener for inputSearch
 search.addEventListener('keyup', () => {
 
-   if(search.value.length != 0) {
-      searchFunction(search, data);
-   }
+      if(search.value.length != 0) {
+         searchFunction(search, data);
+      }
 
  });
