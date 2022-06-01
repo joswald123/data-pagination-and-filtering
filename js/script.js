@@ -6,7 +6,7 @@ FSJS Project 2 - Data Pagination and Filtering
 // Number of students per pageP
 const perPage = 9;
 
-// Search Component
+// Search Component Element
 const header = document.querySelector('header');
 const searchComponent = `
    <label for="search" class="student-search">
@@ -18,13 +18,18 @@ const searchComponent = `
 `
 header.insertAdjacentHTML("beforeend", searchComponent);
 
-// Not found Results
-const h3 = document.createElement('h3');
+// Element h3 "Not found Results" - Search component
+const h3 = document.createElement('h3'); 
 h3.textContent = "No results found";
 h3.className = "no-results";
 h3.style.display = 'none';
 header.insertAdjacentElement("afterend", h3);
 
+/*
+ * Initialize displayElement() function that will change style.display for h3 element.
+* @param (list) array of student data, 
+* 
+*/
 function displayElement (list) {
 
    if(list.length === 0) {
@@ -79,17 +84,18 @@ function addPagination(list) {
 
   const numOfPages = Math.ceil(list.length / perPage);
   const linkList = document.querySelector(".link-list");
-  // set the innerHTML property of the variable you just created to an empty string
+  // added Button HTML Element
   linkList.innerHTML = "";
   for (let i = 1; i <= numOfPages; i++) {
     const button = `
          <li><button type="button">${[i]}</button></li>
       `;
     linkList.insertAdjacentHTML("beforeend", button);
-    const activeButton = document.querySelector("button");
-    activeButton.className = "active";
+    let activeBtn = document.querySelector("li button");
+    activeBtn.className = "active";
   }
 
+  // Each time trigger a button the attribute "active" changes
   linkList.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
       let activeClass = document.querySelector(".active");
@@ -100,34 +106,45 @@ function addPagination(list) {
   });
 }
 
+// Call functions to display all data and it is divide per pages of 9 items
 showPage(data, 1);
 addPagination(data);
 
-
+/*
+ * Initialize searchFunction() function that will display only the data according to the searchInput.
+* When the "Search" is performed, the student data is filtered so that only students whose name includes the 
+* search value are shown.
+* @param (searchInput) search input value
+* @param (list) array of student data, 
+* 
+*/
 function searchFunction(searchInput, list) {
-   
    let newStudentList = [];
-   
+   // for loop that iterate over the list of students and select just the ones that meet the condition
    for(let i=0; i < list.length; i++) {
-      if(list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase())){
+      const firstName = list[i].name.first.toLowerCase();
+      const lastName = list[i].name.last.toLowerCase();
+      if(firstName.includes(searchInput.value.toLowerCase()) || lastName.includes(searchInput.value.toLowerCase()) ){
          newStudentList.push(list[i]);
-      }         
+      }       
    }
 
+   // call functions to display newList, pagination and/or a message if it does not meet the requirements
    displayElement(newStudentList);
-   
-
-
    showPage(newStudentList, 1)
    addPagination(newStudentList);
+   
 
 }
 
-// event Listener for inputSearch
+// event Listener for inputSearch that returns
 search.addEventListener('keyup', () => {
-
+      // Condition that takes the input different to zero 
       if(search.value.length != 0) {
          searchFunction(search, data);
+      } else {
+         showPage(data, 1)
+         addPagination(data);
       }
 
  });
