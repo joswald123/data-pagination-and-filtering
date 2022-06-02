@@ -119,11 +119,14 @@ addPagination(data);
 * 
 */
 function searchFunction(searchInput, list) {
+   // array of new objects from the data
    let newStudentList = [];
+   
    // for loop that iterate over the list of students and select just the ones that meet the condition
    for(let i=0; i < list.length; i++) {
       const firstName = list[i].name.first.toLowerCase();
       const lastName = list[i].name.last.toLowerCase();
+      
       if(firstName.includes(searchInput.value.toLowerCase()) || lastName.includes(searchInput.value.toLowerCase()) ){
          newStudentList.push(list[i]);
       }       
