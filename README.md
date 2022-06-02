@@ -14,3 +14,5 @@ App that contains data of 42 students. Using a technique known as â€œpaginationâ
 1. Clone the repo - [https://github.com/joswald123/Techdegree-Project-1.git](https://github.com/joswald123/data-pagination-and-filtering.git)
 2. Go to your project folder.
 3. Open the index.Html tab and with a right click open it in a default browser.
+
+## Live Preview: https://joswald123.github.io/data-pagination-and-filtering/
