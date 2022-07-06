@@ -129,7 +129,7 @@ function searchFunction(searchInput, list) {
       
       if(firstName.includes(searchInput.value.toLowerCase()) || lastName.includes(searchInput.value.toLowerCase()) ){
          newStudentList.push(list[i]);
-      }       
+      }     
    }
 
    // call functions to display newList, pagination and/or a message if it does not meet the requirements
@@ -142,8 +142,10 @@ function searchFunction(searchInput, list) {
 
 // event Listener for inputSearch that returns
 search.addEventListener('keyup', () => {
+   console.log(search)
       // Condition that takes the input different to zero 
       if(search.value.length != 0) {
+         
          searchFunction(search, data);
       } else {
          showPage(data, 1)
